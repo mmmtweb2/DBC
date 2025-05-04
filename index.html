@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כרטיס ביקור דיגיטלי מחו - צור באופן כרטמל יטנאאפק במקצועי</title>
+    <meta name="description" content="צור כרטיס ביקוור דיגיטלי מקצועי בדקות בלבד. פרטשות דיגטללית מתכונח לכל המקצועות בחיטיר לא פרוטה.">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            background: var(--light-bg);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--dark-color);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--card-shadow);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background: #f1f1f1;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 2px solid #eee;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features li {
+            margin: 0.5rem 0;
+            padding-right: 1.5rem;
+            position: relative;
+        }
+
+        .features li::before {
+            content: '✓';
+            color: var(--secondary-color);
+            position: absolute;
+            right: 0;
+        }
+
+        /* Form Section */
+        .create-form {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        /* Payment Info */
+        .payment-info {
+            background: #f0f7ff;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .payment-details {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .reference-id {
+            background: #e8f4fd;
+            padding: 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">כרטיס ביקור דיגיטלי</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>כרטיס ביקור דיגיטלי מקצועי תוך דקות</h1>
+            <p>מעוצב מציצוע | מהיר | נגיש לכולם</p>
+            <a href="#create" class="btn btn-primary">צור כרטיס חינם</a>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>תוכניות מחיר</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>חינם</h3>
+                    <div class="price">₪0</div>
+                    <div class="price-note">לתמיד</div>
+                    <ul class="features">
+                        <li>כרטיס בסיסי מעוצב</li>
+                        <li>URL: platform.com/שם</li>
+                        <li>עד 1000 צפיות בחודש</li>
+                        <li>עדכון 5 פעמים בחודש</li>
+                    </ul>
+                    <button class="btn btn-secondary" onclick="selectPlan('free')">התחל חינם</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>סטנדרט</h3>
+                    <div class="price">₪99</div>
+                    <div class="price-note">חד-פעמי לכל החיים</div>
+                    <ul class="features">
+                        <li>מעוצב מתקדם + דומיין GitHub</li>
+                        <li>אנליטיקס בסיסי</li>
+                        <li>עדכונים ללא הגבלה</li>
+                        <li>תמיכה במייל</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="selectPlan('standard')">רכוש עכשיו</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>פרימיום</h3>
+                    <div class="price">₪299</div>
+                    <div class="price-note">חד-פעמי לכל החיים</div>
+                    <ul class="features">
+                        <li>עיצוב אישי מותאם</li>
+                        <li>דומיין מסביוט חדרל (אופצפל)</li>
+                        <li>אנליטיקס מתקדם</li>
+                        <li>תמיכה 24/7</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="selectPlan('premium')">שדרג כעט</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="create" class="create-form">
+        <div class="container">
+            <h2>צור את הכרטיס שלך</h2>
+            <div class="form-container">
+                <form id="businessCardForm">
+                    <div class="form-group">
+                        <label>שם העסק *</label>
+                        <input type="text" id="businessName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>מקצוע/עיסוק *</label>
+                        <input type="text" id="profession" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>טלפון *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>דוא"ל *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>אזור/עיר</label>
+                        <input type="text" id="city">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>סלוגן (אופציונלי)</label>
+                        <input type="text" id="slogan" placeholder="למשל: הופכים בית לחלום">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>תוכנית *</label>
+                        <select id="plan" onchange="updatePrice()">
+                            <option value="free">חינם</option>
+                            <option value="standard">סטנדרט - ₪99</option>
+                            <option value="premium">פרימיום - ₪299</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">צור כרטיס</button>
+                </form>
+                
+                <div id="paymentInfo" class="payment-info" style="display: none;">
+                    <h3>פרטי תשלום בביט</h3>
+                    <div class="payment-details">
+                        <p>סכום לתשלום: <span id="price"></span></p>
+                        <p>קוד עסקה:</p>
+                        <div class="reference-id" id="reference"></div>
+                        <p>לתשלום בביט, העבר את הסכום לטלפון:</p>
+                        <h3>050-123-4567</h3>
+                        <p>הזן את קוד העסקה בהערה</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 כרטיס ביקור דיגיטלי. כל הזכויות שמורות.</p>
+            <p>תקנון | מדיניות פרטיות | צור קשר</p>
+        </div>
+    </footer>
+
+    <script>
+        function selectPlan(plan) {
+            const select = document.getElementById('plan');
+            select.value = plan;
+            updatePrice();
+            
+            // גלילה לטופס
+            document.getElementById('create').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function updatePrice() {
+            const plan = document.getElementById('plan').value;
+            const paymentInfo = document.getElementById('paymentInfo');
+            
+            if (plan !== 'free') {
+                const price = plan === 'standard' ? '₪99' : '₪299';
+                document.getElementById('price').textContent = price;
+                
+                // יצירת קוד עסקה ייחודי
+                const reference = 'BC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                document.getElementById('reference').textContent = reference;
+                
+                paymentInfo.style.display = 'block';
+            } else {
+                paymentInfo.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('businessCardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const businessName = document.getElementById('businessName').value;
+            const plan = document.getElementById('plan').value;
+            
+            if (plan === 'free') {
+                // להוסיף כאן שליחה לשרת
+                alert('הכרטיס שלך נוצר בהצלחה! נשלח אליך מייל עם קישור לכרטיס בקרוב.');
+            } else {
+                // הצגת פרטי תשלום
+                alert('אנא בצע את התשלום בביט לפי ההוראות שלמעלה. לאחר קבלת התשלום, נוצר הכרטיס ונשלח אליך מייל.');
+            }
+            
+            // ניקוי הטופס
+            this.reset();
+            updatePrice();
+        });
+    </script>
+</body>
+</html>
