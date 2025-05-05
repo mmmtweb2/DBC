@@ -396,52 +396,164 @@
         </div>
     </footer>
 
-    <script>
-        function selectPlan(plan) {
-            const select = document.getElementById('plan');
-            select.value = plan;
-            updatePrice();
-            
-            // גלילה לטופס
-            document.getElementById('create').scrollIntoView({ behavior: 'smooth' });
+    // החלף את הסקריפט הקיים ב-JavaScript הזה:
+const cardTemplate = `<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{businessName} - כרטיס ביקור דיגיטלי</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        
-        function updatePrice() {
-            const plan = document.getElementById('plan').value;
-            const paymentInfo = document.getElementById('paymentInfo');
-            
-            if (plan !== 'free') {
-                const price = plan === 'standard' ? '₪99' : '₪299';
-                document.getElementById('price').textContent = price;
-                
-                // יצירת קוד עסקה ייחודי
-                const reference = 'BC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-                document.getElementById('reference').textContent = reference;
-                
-                paymentInfo.style.display = 'block';
-            } else {
-                paymentInfo.style.display = 'none';
-            }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            text-align: center;
+            margin: auto;
         }
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px;
+            font-weight: bold;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .profession {
+            color: #3498db;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .slogan {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .contact {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .contact div {
+            margin: 10px 0;
+            color: #555;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">{initial}</div>
+        <h1>{businessName}</h1>
+        <div class="profession">{profession}</div>
+        {sloganSection}
+        <div class="contact">
+            <div>📞 {phone}</div>
+            <div>📧 {email}</div>
+            {citySection}
+        </div>
+        <footer>
+            כרטיס זה נוצר באמצעות כרטיס ביקור דיגיטלי
+        </footer>
+    </div>
+</body>
+</html>`;
+
+// פונקציות קיימות
+function selectPlan(plan) {
+    const select = document.getElementById('plan');
+    select.value = plan;
+    updatePrice();
+    document.getElementById('create').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updatePrice() {
+    const plan = document.getElementById('plan').value;
+    const paymentInfo = document.getElementById('paymentInfo');
+    
+    if (plan !== 'free') {
+        const price = plan === 'standard' ? '₪99' : '₪299';
+        document.getElementById('price').textContent = price;
+        const reference = 'BC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        document.getElementById('reference').textContent = reference;
+        paymentInfo.style.display = 'block';
+    } else {
+        paymentInfo.style.display = 'none';
+    }
+}
+
+// הפונקציה החדשה עבור הורדת כרטיס
+document.getElementById('businessCardForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const businessName = document.getElementById('businessName').value;
+    const profession = document.getElementById('profession').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const city = document.getElementById('city').value;
+    const slogan = document.getElementById('slogan').value;
+    const plan = document.getElementById('plan').value;
+    
+    if (plan === 'free') {
+        // יצירת כרטיס והורדה
+        let html = cardTemplate;
+        html = html.replace(/{businessName}/g, businessName);
+        html = html.replace(/{profession}/g, profession);
+        html = html.replace(/{phone}/g, phone);
+        html = html.replace(/{email}/g, email);
+        html = html.replace(/{initial}/g, businessName.charAt(0).toUpperCase());
         
-        document.getElementById('businessCardForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const businessName = document.getElementById('businessName').value;
-            const plan = document.getElementById('plan').value;
-            
-            if (plan === 'free') {
-                // להוסיף כאן שליחה לשרת
-                alert('הכרטיס שלך נוצר בהצלחה! נשלח אליך מייל עם קישור לכרטיס בקרוב.');
-            } else {
-                // הצגת פרטי תשלום
-                alert('אנא בצע את התשלום בביט לפי ההוראות שלמעלה. לאחר קבלת התשלום, נוצר הכרטיס ונשלח אליך מייל.');
-            }
-            
-            // ניקוי הטופס
-            this.reset();
-            updatePrice();
-        });
-    </script>
+        // הוספת חלקים אופציונליים
+        html = html.replace(/{sloganSection}/g, 
+            slogan ? `<div class="slogan">"${slogan}"</div>` : '');
+        html = html.replace(/{citySection}/g,
+            city ? `<div>📍 ${city}</div>` : '');
+        
+        // הורדת הקובץ
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${businessName.replace(/\s+/g, '-').toLowerCase()}-card.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('כרטיס הביקור שלך נוצר בהצלחה והורד למחשב!');
+    } else {
+        alert('אנא בצע את התשלום בביט לפי ההוראות שלמעלה. לאחר קבלת התשלום, נוצר הכרטיס ונשלח אליך מייל.');
+    }
+    
+    this.reset();
+    updatePrice();
+});
+
 </body>
 </html>
