@@ -559,17 +559,18 @@ window.addEventListener('load', function() {
         const encodedHTML = hash.slice(6);
         const html = decodeURIComponent(encodedHTML);
         
-        // הוספת css לגיפט שלנו
-        const cssLink = document.createElement('style');
-        cssLink.textContent = `
+        // ווידוי שהכרטיס יועד למסמך שלנו
+        // הוסף css בנפרד
+        const style = document.createElement('style');
+        style.textContent = `
             #card-display {
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100%;
-                height: 100%;
+                width: 100vw;
+                height: 100vh;
                 background: white;
-                z-index: 10000;
+                z-index: 9999;
                 overflow: auto;
             }
             #close-card {
@@ -582,15 +583,25 @@ window.addEventListener('load', function() {
                 padding: 10px 20px;
                 border-radius: 5px;
                 cursor: pointer;
-                z-index: 10001;
+                z-index: 10000;
+                font-family: Arial;
+            }
+            #card-display iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
             }
         `;
-        document.head.appendChild(cssLink);
+        document.head.appendChild(style);
         
-        // יצירת div להצגת הכרטיס
+        // יצירת iframe להצגת הכרטיס
         const cardDisplay = document.createElement('div');
         cardDisplay.id = 'card-display';
-        cardDisplay.innerHTML = html;
+        
+        const iframe = document.createElement('iframe');
+        iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+        iframe.sandbox = 'allow-same-origin';
+        cardDisplay.appendChild(iframe);
         
         // כפתור לסגירה
         const closeButton = document.createElement('button');
@@ -599,6 +610,7 @@ window.addEventListener('load', function() {
         closeButton.onclick = function() {
             cardDisplay.remove();
             closeButton.remove();
+            style.remove();
             history.pushState("", document.title, window.location.pathname);
         };
         
