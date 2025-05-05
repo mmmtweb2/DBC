@@ -551,6 +551,61 @@
         this.reset();
         updatePrice();
     });
+
+    // פונקציה להצגת כרטיס מקישור
+window.addEventListener('load', function() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#card=')) {
+        const encodedHTML = hash.slice(6);
+        const html = decodeURIComponent(encodedHTML);
+        
+        // הוספת css לגיפט שלנו
+        const cssLink = document.createElement('style');
+        cssLink.textContent = `
+            #card-display {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+                z-index: 10000;
+                overflow: auto;
+            }
+            #close-card {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: #e74c3c;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 10001;
+            }
+        `;
+        document.head.appendChild(cssLink);
+        
+        // יצירת div להצגת הכרטיס
+        const cardDisplay = document.createElement('div');
+        cardDisplay.id = 'card-display';
+        cardDisplay.innerHTML = html;
+        
+        // כפתור לסגירה
+        const closeButton = document.createElement('button');
+        closeButton.id = 'close-card';
+        closeButton.textContent = '✕ סגור';
+        closeButton.onclick = function() {
+            cardDisplay.remove();
+            closeButton.remove();
+            history.pushState("", document.title, window.location.pathname);
+        };
+        
+        document.body.appendChild(cardDisplay);
+        document.body.appendChild(closeButton);
+    }
+});
     </script>
 </body>
 </html>
